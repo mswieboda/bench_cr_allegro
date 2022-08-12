@@ -83,7 +83,7 @@ module Bench
         end
       end
 
-      sceneManager.destroy()
+      sceneManager.destroy
     end
   end
 end

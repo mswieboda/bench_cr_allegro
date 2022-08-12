@@ -56,7 +56,7 @@ module Bench
         return
       end
 
-      objs.each(&.update)
+      objs.each(&.update(screen_width, screen_height))
 
       add_objs
 
