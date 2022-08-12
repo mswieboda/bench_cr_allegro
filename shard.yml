@@ -1,0 +1,17 @@
+name: bench
+version: 0.1.0
+
+authors:
+  - Matt Swieboda <mswieboda@users.noreply.github.com>
+
+targets:
+  bench:
+    main: src/bench.cr
+
+dependencies:
+  crystal_allegro:
+    github: Fryguy/crystal_allegro
+
+crystal: 1.5.0
+
+license: MIT
