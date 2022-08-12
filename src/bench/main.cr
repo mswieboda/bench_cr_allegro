@@ -58,6 +58,8 @@ module Bench
       event = LibAllegro::Event.new
       sceneManager = SceneManager.new(Width, Height)
 
+      sceneManager.init
+
       LibAllegro.start_timer(timer)
 
       loop do
@@ -73,7 +75,7 @@ module Bench
 
           LibAllegro.clear_to_color(LibAllegro.map_rgb_f(0, 0, 0))
 
-          sceneManager.draw()
+          sceneManager.draw
 
           LibAllegro.flip_display
 

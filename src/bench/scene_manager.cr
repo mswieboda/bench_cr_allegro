@@ -2,7 +2,6 @@ require "./scene"
 require "./keys"
 require "./mouse"
 require "./fps_display"
-require "./main_menu"
 require "./game_scene"
 
 module Bench
@@ -10,12 +9,8 @@ module Bench
     property? redraw
     property keys
     property mouse
-    property fps
 
-    property scene : Scene
-    property mainMenu
-    property gameScene
-
+    property scene : GameScene
 
     def initialize(screen_width, screen_height)
       super(screen_width, screen_height)
@@ -24,21 +19,18 @@ module Bench
 
       @keys = Keys.new
       @mouse = Mouse.new
-      @fps = FPSDisplay.new
 
-      @mainMenu = MainMenu.new(screen_width, screen_height)
-      @gameScene = GameScene.new(screen_width, screen_height)
-
-      @scene = mainMenu
+      @scene = GameScene.new(screen_width, screen_height)
     end
 
     def init
+      scene.init
     end
 
     def update(event : LibAllegro::Event)
       case(event.type)
       when LibAllegro::EventTimer
-        check_scenes
+        @exit = true if scene.exit?
         update(keys, mouse)
         keys.reset
 
@@ -57,31 +49,12 @@ module Bench
       end
     end
 
-    def check_scenes
-      case scene.name
-      when :main_menu
-        @exit = true if mainMenu.exit?
-        switch(gameScene) if mainMenu.start?
-      when :game_scene
-        switch(mainMenu) if gameScene.exit?
-      end
-    end
-
-    def switch(nextScene : Scene)
-      scene.reset
-
-      @scene = nextScene
-
-      scene.init
-    end
-
     def update(keys : Keys, mouse : Mouse)
       scene.update(keys, mouse)
     end
 
     def draw
       scene.draw
-      fps.draw
     end
 
     def reset
@@ -95,7 +68,7 @@ module Bench
     end
 
     def calc_fps
-      fps.calc
+      scene.calc_fps
     end
   end
 end

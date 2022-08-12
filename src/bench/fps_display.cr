@@ -32,13 +32,34 @@ module Bench
         @time_start = Time.local
         @frames = 0
       end
+
+      return fps.to_i
     end
 
-    def draw
-      LibAllegro.draw_filled_rectangle(Margin, Margin, Width + Margin * 3, Margin * 3 + TextHeight + BarHeight + Margin, DarkShadow)
-      LibAllegro.draw_text(@font, Green, Margin * 3, Margin * 2, LibAllegro::AlignInteger, @str_fps)
-      LibAllegro.draw_text(@font, Green, Width + Margin, Margin * 2, LibAllegro::AlignRight, @str_time)
-      LibAllegro.draw_filled_rectangle(Margin * 2, Margin * 3 + TextHeight, Margin * 2 + @fps_percent, Margin * 3 + TextHeight + BarHeight, Green)
+    def draw(obj_count, frames)
+      height_total = Margin * 3 + TextHeight + BarHeight + Margin + TextHeight + Margin + TextHeight + Margin
+      height = Margin
+
+      LibAllegro.draw_filled_rectangle(Margin, height, Width + Margin * 3, height_total, DarkShadow)
+
+      height += Margin
+
+      LibAllegro.draw_text(@font, Green, Margin * 3, height, LibAllegro::AlignInteger, @str_fps)
+      LibAllegro.draw_text(@font, Green, Width + Margin, height, LibAllegro::AlignRight, @str_time)
+
+      height += TextHeight + Margin
+
+      LibAllegro.draw_filled_rectangle(Margin * 2, height, Margin * 2 + @fps_percent, height + BarHeight, Green)
+
+      height += BarHeight + Margin
+
+      LibAllegro.draw_text(@font, Green, Margin * 3, height, 0, obj_count.to_s)
+      LibAllegro.draw_text(@font, Green, Width + Margin, height, LibAllegro::AlignRight, "objs")
+
+      height += TextHeight + Margin
+
+      LibAllegro.draw_text(@font, Green, Margin * 3, height, 0, frames.to_s)
+      LibAllegro.draw_text(@font, Green, Width + Margin, height, LibAllegro::AlignRight, "frames")
     end
   end
 end

@@ -17,12 +17,6 @@ module Bench
       @tiles = [] of Tile
     end
 
-    def update(mouse : Mouse)
-      map_mouse = Mouse.new(mouse.x - x, mouse.y - y)
-
-      tiles.each(&.update(map_mouse))
-    end
-
     def draw
       tiles.each(&.draw(x, y))
     end

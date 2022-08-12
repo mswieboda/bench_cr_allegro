@@ -4,14 +4,12 @@ module Bench
     KeyReleased = 2
     KeyPressed = 3
 
-    property keys
-
     def initialize
       @keys = Array(Int64).new(LibAllegro::KeyMax, 0)
     end
 
     def reset
-      keys.each_with_index do |key, index|
+      @keys.each_with_index do |key, index|
         @keys[index] &= KeySeen
       end
     end
@@ -25,11 +23,15 @@ module Bench
     end
 
     def pressed?(keycode : Int)
-      keys[keycode] > 0
+      @keys[keycode] > 0
     end
 
-    def any_pressed?(keycodes : Array(Int))
+    def pressed?(keycodes : Array(Int))
       keycodes.any? { |keycode| pressed?(keycode) }
+    end
+
+    def any_pressed?
+      @keys.any? { |keycode| pressed?(keycode) }
     end
 
     def just_pressed?(keycode : Int)
