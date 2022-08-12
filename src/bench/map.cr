@@ -1,5 +1,3 @@
-require "./ground"
-require "./coal"
 require "./tile"
 require "./mouse"
 
